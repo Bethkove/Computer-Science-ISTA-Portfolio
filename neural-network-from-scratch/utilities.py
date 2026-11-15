@@ -1,13 +1,15 @@
-import h5py
+from pathlib import Path
 import numpy as np
+import h5py
 
+BASE_DIR = Path(__file__).resolve().parent
 
 def load_data():
-    train_dataset = h5py.File('trainset.hdf5', "r")
+    train_dataset = h5py.File('datasets/trainset.hdf5', "r")
     X_train = np.array(train_dataset["X_train"][:]) # your train set features
     y_train = np.array(train_dataset["Y_train"][:]) # your train set labels
 
-    test_dataset = h5py.File('testset.hdf5', "r")
+    test_dataset = h5py.File('datasets/testset.hdf5', "r")
     X_test = np.array(test_dataset["X_test"][:]) # your train set features
     y_test = np.array(test_dataset["Y_test"][:]) # your train set labels
     
