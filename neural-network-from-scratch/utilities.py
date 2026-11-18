@@ -1,8 +1,6 @@
-from pathlib import Path
-import numpy as np
 import h5py
+import numpy as np
 
-BASE_DIR = Path(__file__).resolve().parent
 
 def load_data():
     train_dataset = h5py.File('datasets/trainset.hdf5', "r")
