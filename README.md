@@ -1,115 +1,107 @@
+**English** | [Français](README.fr.md)
+
 # Computer Science & AI — Research Portfolio
 
-Portfolio de travail orienté **Machine Learning et recherche**, construit en vue d'un stage de recherche de licence (L3 Informatique, Université de Reims Champagne-Ardenne), notamment à l'ISTA.
+Research-oriented portfolio of a third-year Computer Science undergraduate (Licence 3 Informatique, Université de Reims Champagne-Ardenne), built to apply for a research internship in machine learning.
 
-## Objectif
+## Goal
 
-Montrer, à l'échelle d'un étudiant de licence, une capacité à :
+Show, at the scale of an undergraduate student, the ability to:
 
-- comprendre les fondements mathématiques et algorithmiques ;
-- implémenter des méthodes sans dépendre entièrement de bibliothèques haut niveau ;
-- lire un article de recherche et en reproduire une idée à petite échelle ;
-- poser une question précise et concevoir une expérience contrôlée ;
-- analyser des résultats en distinguant observation, interprétation et conclusion ;
-- documenter un travail reproductible, limites comprises.
+- understand the mathematical and algorithmic foundations;
+- implement methods without relying entirely on high-level libraries;
+- read a recent research paper and reproduce one of its ideas at small scale;
+- ask a precise question and design a controlled experiment;
+- analyse results while separating observation, interpretation and conclusion;
+- document reproducible work, limitations included.
 
-Tous les projets tournent sur un ordinateur portable (**CPU uniquement**).
+Every project runs on a laptop (**CPU only**).
 
 ---
 
-## Graphe du portfolio
+## Portfolio map
 
-```text
-                     Neural Network from Scratch
-               (descente de gradient, rétropropagation)
-                                 │
-                                 ▼
-                    Lecture d'articles (research-notes)
-                                 │
-          ┌──────────────────────┼──────────────────────┐
-          │                      │                      │
-          ▼                      ▼                      ▼
-   Smoke and Mirrors           QSGD                 KS(conf)
-   (Locatello)             (Alistarh)              (Lampert)
-          │                      │                      │
-          ▼                      ▼                      ▼
-  causal-effect-bias       quantized-sgd     classifier-shift-detection
-  Le seuillage des        Combien de bits    Un test simple détecte-t-il
-  prédictions biaise-t-il  faut-il pour       qu'un classifieur est hors
-  un effet causal ?        apprendre ?         de ses conditions d'usage ?
-          │                      │                      │
-          └──────────────────────┼──────────────────────┘
-                                 ▼
-             Question → hypothèses → expériences → limites
-                                 │
-                                 ▼
-                    Rapport (report/research-report.md)
+```mermaid
+flowchart TD
+    R["reading-notes<br/>papers read,<br/>linked to projects"]
+    M["Math basics<br/>derivatives, linear algebra,<br/>probability"]
+    NN["neural-network-from-scratch<br/>understand<br/>backpropagation"]
+    C["causal-effect-bias · Locatello<br/>does thresholding predictions<br/>bias a causal effect?"]
+    F["federated-kmeans · Lampert<br/>when does server-side<br/>initialization matter?"]
+    Q["quantized-training · Alistarh<br/>how few bits can a small<br/>network train with?"]
+    RC["report:<br/>causal-effect-bias"]
+    RF["report:<br/>federated-kmeans"]
+    RQ["report:<br/>quantized-training"]
+
+    M --> NN
+    NN -->|reuses the training code| Q
+    R -. feeds .-> C
+    R -. feeds .-> F
+    R -. feeds .-> Q
+    C --> RC
+    F --> RF
+    Q --> RQ
 ```
 
-`quantized-sgd/` réutilise directement le code de `neural-network-from-scratch/`.
+## Projects
 
-## Projets
-
-| Projet | Question | Groupe lié | Statut |
+| Project | Question | Paper | Status |
 |---|---|---|---|
-| [neural-network-from-scratch](neural-network-from-scratch/) | Construire et vérifier un réseau de neurones en NumPy | — (base technique) | En cours |
-| [causal-effect-bias](causal-effect-bias/) | Le biais dû au seuillage change-t-il quand le traitement est déséquilibré ? | Locatello | À démarrer |
-| [quantized-sgd](quantized-sgd/) | Combien de niveaux de quantification du gradient suffisent pour apprendre ? | Alistarh | À démarrer |
-| [classifier-shift-detection](classifier-shift-detection/) | KS(conf) détecte-t-il bruit, rotation et classes inconnues ? | Lampert | À démarrer |
+| [neural-network-from-scratch](neural-network-from-scratch/) | Build and verify a neural network in NumPy | — (technical foundation) | In progress |
+| [causal-effect-bias](causal-effect-bias/) | Does the bias caused by thresholding predictions change when the treatment is imbalanced? | Cadei et al., NeurIPS 2024 | Not started |
+| [federated-kmeans](federated-kmeans/) | Under privacy noise, when does a small server-side dataset make federated k-means work? | Scott, Lampert & Saulpic, ICML 2025 | Not started |
+| [quantized-training](quantized-training/) | Does a Hadamard transform make low-bit training of a small network more accurate? | Panferov et al. (QuEST), 2025 | Not started |
 
-Chaque projet indique dans son README la question, la méthode, une **première action** de 30 minutes, et une Definition of Done.
+Each project README gives the question, the method, a 30-minute **first step**, and a Definition of Done.
 
-## Arborescence
+## Repository layout
 
 ```text
 .
-├── README.md
-├── ROADMAP.md
+├── README.md / README.fr.md
+├── ROADMAP.md / ROADMAP.fr.md
 ├── requirements.txt
 ├── .gitignore
 │
 ├── neural-network-from-scratch/
-│   ├── README.md
+│   ├── README.md / README.fr.md
 │   ├── neuron.py
 │   ├── catdogneuron.py
 │   ├── utilities.py
 │   └── datasets/
 │
-├── causal-effect-bias/
-│   └── README.md
-├── quantized-sgd/
-│   └── README.md
-├── classifier-shift-detection/
-│   └── README.md
+├── causal-effect-bias/          README.md / README.fr.md
+├── federated-kmeans/            README.md / README.fr.md
+├── quantized-training/          README.md / README.fr.md
 │
 ├── research-notes/
-│   ├── README.md
+│   ├── README.md / README.fr.md
 │   ├── smoke-and-mirrors.md
-│   ├── qsgd.md
-│   ├── ks-conf.md
-│   └── causal-representation-learning.md
+│   ├── feddp-kmeans.md
+│   ├── quest.md
+│   └── sparse-pruning.md
 │
 └── report/
     └── research-report.md
 ```
 
-Les dossiers `src/`, `tests/`, `experiments/` et `results/` de chaque projet seront créés **au moment où ils deviennent nécessaires**. Aucun fichier vide ou placeholder n'est ajouté uniquement pour faire apparaître une arborescence.
+`src/`, `tests/`, `experiments/` and `results/` folders are created **when they become necessary**. No empty file or placeholder is added just to display a structure.
 
 ## Installation
 
 ```bash
 python -m venv .venv
-# Windows : .venv\Scripts\activate    —    Linux/macOS : source .venv/bin/activate
+# Windows: .venv\Scripts\activate    —    Linux/macOS: source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
 ## Definition of Done
 
-Un projet est considéré comme terminé lorsqu'il possède :
+A project is finished when it has:
 
-- une question et des hypothèses écrites **avant** les résultats ;
-- une implémentation compréhensible, avec des tests sur des cas calculables à la main ;
-- des expériences répétées sur plusieurs graines ;
-- des résultats sauvegardés et des figures ;
-- une section « limites » honnête ;
-- un README qui permet de tout reproduire.
+- a question and hypotheses written **before** the results;
+- a readable implementation, with tests on cases that can be computed by hand;
+- experiments repeated over several random seeds;
+- saved results and figures;
+- an honest limitations section;
+- a README that lets anyone reproduce everything.

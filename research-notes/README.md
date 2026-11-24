@@ -1,49 +1,33 @@
+**English** | [Français](README.fr.md)
+
 # Research Notes
 
-## Méthode de lecture
+## Reading method
 
-Pour chaque article :
+For each paper:
 
 ### Pass 1 — 10 minutes
-Lire :
-- titre ;
-- abstract ;
-- introduction ;
-- figures ;
-- conclusion.
+Read the title, abstract, introduction, figures and conclusion.
+Goal: understand the general problem.
 
-Objectif : comprendre le problème général.
+### Pass 2 — 30 to 60 minutes
+Identify the precise problem, the main idea, the method, the experimental protocol, the main result and the limitations.
 
-### Pass 2 — 30 à 60 minutes
-Identifier :
-- problème précis ;
-- idée principale ;
-- méthode ;
-- protocole expérimental ;
-- résultat principal ;
-- limites.
+### Pass 3 — equations
+Go back to the equations that are actually needed to understand the method.
 
-### Pass 3 — équations
-Revenir sur les équations réellement nécessaires pour comprendre la méthode.
+### Pass 4 — synthesis
+Write: research question, main idea, method, main result, limitation, one possible next experiment.
 
-### Pass 4 — synthèse
-Écrire :
-- Research question ;
-- Main idea ;
-- Method ;
-- Main result ;
-- Limitation ;
-- One possible next experiment.
+Notes must be personal: do not copy the paper. The goal is to show understanding and the ability to ask questions.
 
-## Articles
+## Papers
 
-| Article | Groupe | Projet lié | Profondeur visée |
+| Paper | Group | Linked project | Target depth |
 |---|---|---|---|
-| [Smoke and Mirrors in Causal Downstream Tasks](smoke-and-mirrors.md) | Locatello | `causal-effect-bias/` | Passes 1 à 4 |
-| [QSGD](qsgd.md) | Alistarh | `quantized-sgd/` | Passes 1 à 3 (section 3) |
-| [KS(conf)](ks-conf.md) | Lampert | `classifier-shift-detection/` | Passes 1 à 4 |
-| [Unifying Causal Representation Learning with the Invariance Principle](causal-representation-learning.md) | Locatello | lecture de contexte | Passes 1 et 2 seulement |
+| [Smoke and Mirrors in Causal Downstream Tasks](smoke-and-mirrors.md) — NeurIPS 2024 | Locatello | `causal-effect-bias/` | Passes 1 to 4 |
+| [Differentially Private Federated k-Means Clustering with Server-Side Data](feddp-kmeans.md) — ICML 2025 | Lampert | `federated-kmeans/` | Passes 1 to 3 |
+| [QuEST: Stable Training of LLMs with 1-Bit Weights and Activations](quest.md) — 2025 | Alistarh | `quantized-training/` | Passes 1 to 3 (method) |
+| [Accurate Neural Network Pruning Requires Rethinking Sparse Optimization](sparse-pruning.md) — TMLR 2024 | Alistarh | complementary reading | Passes 1 and 2 |
 
-Pour chaque groupe, ajouter avant d'écrire le mail un article récent pris sur la page du groupe (passes 1 et 2).
-
-Les notes doivent être personnelles : ne pas recopier le papier. Le but est de montrer la compréhension et la capacité à poser des questions.
+Notes are written in English, in my own words.

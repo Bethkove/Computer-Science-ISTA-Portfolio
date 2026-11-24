@@ -1,63 +1,65 @@
+**English** | [Français](README.fr.md)
+
 # Neural Network from Scratch
 
-## Objectif
+## Goal
 
-Construire un petit réseau de neurones en **Python + NumPy**, sans PyTorch ni TensorFlow, pour comprendre de bout en bout le forward, la rétropropagation et la descente de gradient.
+Build a small neural network in **Python + NumPy**, without PyTorch or TensorFlow, to understand the forward pass, backpropagation and gradient descent end to end.
 
-Ce projet est la **base technique** du portfolio : l'étude `quantized-sgd/` réutilise directement l'entraînement par descente de gradient écrit ici.
+This project is the **technical foundation** of the portfolio: `quantized-training/` reuses the training code written here.
 
-## État actuel
+## Current state
 
-| Fichier | Contenu | État |
+| File | Content | State |
 |---|---|---|
-| `neuron.py` | Un neurone artificiel (régression logistique) sur des données 2D (`make_blobs`) | Écrit, contient des bugs (voir plus bas) |
-| `catdogneuron.py` | Le même neurone sur le jeu chat/chien | En cours, ne tourne pas encore |
-| `utilities.py` | Chargement des données chat/chien (HDF5) | Fonctionnel |
-| `datasets/` | 1000 images d'entraînement et 200 de test, 64×64, niveaux de gris, classes équilibrées | Présent |
+| `neuron.py` | A single artificial neuron (logistic regression) on 2D data (`make_blobs`) | Written, contains bugs (see below) |
+| `catdogneuron.py` | The same neuron on the cat/dog dataset | In progress, does not run yet |
+| `utilities.py` | Loading the cat/dog data (HDF5) | Working |
+| `datasets/` | 1000 training and 200 test images, 64×64, grayscale, balanced classes | Present |
 
-Si ces données viennent d'un tutoriel, cite la source ici.
+If this data comes from a tutorial, cite the source here.
 
-## À corriger avant d'aller plus loin
+## To fix before going further
 
-Ces problèmes sont à corriger **par toi** ; chacun est un petit exercice.
+Fix these yourself; each one is a small exercise.
 
-1. **`neuron.py`, lignes 68-75** : `W` et `b` sont utilisés avant d'être définis (`artificial_neuron` n'est appelé qu'à la ligne 77). Que se passe-t-il à l'exécution, et comment réordonner le script ?
-2. **`plt.show` sans parenthèses** (`neuron.py` ligne 65, `catdogneuron.py` ligne 70) : la courbe de perte ne s'affiche pas. Pourquoi ?
-3. **`catdogneuron.py`** : `X_train` a la forme `(1000, 64, 64)`. Quelle forme doit avoir `X` pour que `X.dot(W)` fonctionne avec un `W` de forme `(n_features, 1)` ?
-4. **Normalisation** : les pixels vont de 0 à 254. Que devient `np.exp(-Z)` avec des entrées de cet ordre ? Que faut-il faire avant l'entraînement ?
-5. **`log_loss`** : que vaut `np.log(A)` si `A` vaut exactement 0 ou 1 ? Ajoute une petite constante `epsilon` et explique ton choix.
-6. **`catdogneuron.py`, ligne 8** : le chemin Windows écrit en dur empêche quiconque d'autre de lancer le script. Comment s'en passer ?
-7. **Code dupliqué** : `catdogneuron.py` recopie toutes les fonctions de `neuron.py`. Regroupe-les dans un module importé par les deux scripts.
+1. **`neuron.py`, lines 68-75:** `W` and `b` are used before being defined (`artificial_neuron` is only called on line 77). What happens when the script runs, and how should it be reordered?
+2. **`plt.show` without parentheses** (`neuron.py` line 65, `catdogneuron.py` line 70): the loss curve is never displayed. Why?
+3. **`catdogneuron.py`:** `X_train` has shape `(1000, 64, 64)`. What shape must `X` have for `X.dot(W)` to work with a `W` of shape `(n_features, 1)`?
+4. **Normalization:** pixel values range from 0 to 254. What happens to `np.exp(-Z)` with inputs of that size? What should be done before training?
+5. **`log_loss`:** what is `np.log(A)` when `A` is exactly 0 or 1? Add a small constant `epsilon` and explain your choice.
+6. **`catdogneuron.py`, line 8:** the hard-coded Windows path prevents anyone else from running the script. How can you avoid it?
+7. **Duplicated code:** `catdogneuron.py` copies every function from `neuron.py`. Move them into one module imported by both scripts.
 
-## Étapes suivantes (version réduite, compatible avec le calendrier)
+## Next steps (reduced scope, compatible with the schedule)
 
-1. Corriger les 7 points ci-dessus.
-2. Vérifier `gradients` par **gradient checking** (comparer à des différences finies) dans un premier test `pytest`.
-3. Passer du neurone unique à un réseau à **une couche cachée** : `input → Dense → ReLU/Sigmoid → Dense → Sigmoid`, avec rétropropagation écrite à la main.
-4. Entraîner sur chat/chien, puis sur `sklearn.datasets.load_digits` (10 classes, nécessite Softmax + Cross-Entropy).
-5. Exposer une fonction d'entraînement qui reçoit les gradients et applique la mise à jour : c'est l'endroit où `quantized-sgd/` branchera la quantification.
+1. Fix the 7 points above.
+2. Check `gradients` with **gradient checking** (compare with finite differences) in a first `pytest` test.
+3. Go from a single neuron to a network with **one hidden layer**: `input → Dense → ReLU/Sigmoid → Dense → Sigmoid`, with hand-written backpropagation.
+4. Train on cat/dog, then on `sklearn.datasets.load_digits` (10 classes, needs Softmax + Cross-Entropy).
+5. Expose a training function that takes the weights through a function before the forward pass: this is where `quantized-training/` will plug in quantization.
 
-Le reste du plan initial (MNIST complet, nombreuses expériences d'hyperparamètres) passe après les candidatures.
+The rest of the original plan (full MNIST, many hyperparameter experiments) comes after the applications.
 
-## Structure cible
+## Target layout
 
 ```text
 neural-network-from-scratch/
-├── README.md
+├── README.md / README.fr.md
 ├── neuron.py
 ├── catdogneuron.py
 ├── utilities.py
 ├── datasets/
-└── tests/            ← à créer avec le premier test de gradient
+└── tests/            ← create with the first gradient test
 ```
 
-Créer chaque dossier uniquement lorsqu'il reçoit son premier contenu utile.
+Create each folder only when it receives its first useful content.
 
 ## Definition of Done
 
-- [ ] Les 7 points corrigés
-- [ ] Gradient checking réussi (test `pytest`)
-- [ ] Réseau à une couche cachée entraînable
-- [ ] Courbe de perte et précision test sur chat/chien
-- [ ] Fonction d'entraînement réutilisable par `quantized-sgd/`
-- [ ] Analyse courte : ce qui marche, ce qui ne marche pas, pourquoi
+- [ ] The 7 points fixed
+- [ ] Gradient checking passes (`pytest` test)
+- [ ] One-hidden-layer network trains
+- [ ] Loss curve and test accuracy on cat/dog
+- [ ] Training function reusable by `quantized-training/`
+- [ ] Short analysis: what works, what does not, and why

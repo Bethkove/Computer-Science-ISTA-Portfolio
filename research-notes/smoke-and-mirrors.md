@@ -1,42 +1,47 @@
-# Smoke and Mirrors in Causal Downstream Tasks
+# Smoke and Mirrors
 
-**Paper:** Smoke and Mirrors in Causal Downstream Tasks
-**Authors:** Cadei, Lindorfer, Cremer, Schmid, Locatello
-**Venue:** NeurIPS 2024
-**Groupe :** Locatello (ISTA)
-**Projet lié :** `causal-effect-bias/`
+**Paper:** Smoke and Mirrors in Causal Downstream Tasks  
+**Authors:** Cadei, Lindorfer, Cremer, Schmid, Locatello  
+**Venue:** NeurIPS 2024  
+**Group:** Locatello (ISTA)  
+**Linked project:** `causal-effect-bias/`  
+**Link:** https://github.com/CausalLearningAI/ISTAnt
 
-## Lecture
+## Reading
 
 - [ ] Pass 1
 - [ ] Pass 2
-- [ ] Pass 3 (lemme 3.1, théorème 3.1, annexe B.1)
+- [ ] Pass 3 (Lemma 3.1, Theorem 3.1, Appendix B.1)
 - [ ] Pass 4
 
 ## Research question
 
-À compléter après lecture.
+To be written after reading.
 
 ## Main idea
 
-À compléter après lecture.
+To be written after reading.
 
 ## Method
 
-À compléter après lecture.
+To be written after reading.
 
 ## Main result
 
-À compléter après lecture.
+To be written after reading.
 
 ## Important equations
 
-À compléter après lecture.
+To be written after reading.
 
 ## Limitations
 
-À compléter après lecture.
+To be written after reading.
 
 ## Connection to my projects
 
-À compléter après lecture.
+To be written after reading.
+
+## Question I could ask the authors
+
+To be written after reading.

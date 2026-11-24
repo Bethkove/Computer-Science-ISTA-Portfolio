@@ -1,54 +1,57 @@
+**English** | [Français](ROADMAP.fr.md)
+
 # Portfolio Roadmap
 
-**Objectif :** stage de recherche à partir de début avril 2027.
-**Contrainte ISTA :** inscription sur le portail terminée au moins 2 mois avant le début, donc vers début février. Les groupes doivent avoir été contactés bien avant : **mails vers le 15 décembre 2026**.
+**Goal:** research internship starting in early April 2027.
+**Constraint:** registration on the host institute's portal must be completed at least 2 months before the start, i.e. around early February. Groups must be contacted well before that: **emails around 15 December 2026**.
 
-Les périodes sont indicatives ; ce qui compte est l'ordre.
+Dates are indicative; the order is what matters.
 
 ---
 
-## Phase 1 — Locatello : `causal-effect-bias`
-**25 novembre – 6 décembre 2026**
+## Phase 1 — Locatello: `causal-effect-bias`
+**25 November – 6 December 2026**
 
-- [ ] Lire *Smoke and Mirrors* (passes 1 et 2, puis passe 3 sur le lemme 3.1, le théorème 3.1 et l'annexe B.1)
-- [ ] Calculer à la main l'écart de l'équation 37
-- [ ] Écrire les hypothèses
-- [ ] Test : valeur analytique retrouvée
-- [ ] Reproduire la figure 3
-- [ ] Faire varier P(T=1)
-- [ ] Figure et README complétés
+- [ ] Read *Smoke and Mirrors* (passes 1 and 2, then pass 3 on Lemma 3.1, Theorem 3.1 and Appendix B.1)
+- [ ] Compute the gap of Equation 37 by hand
+- [ ] Write the hypotheses
+- [ ] Test: analytical value recovered
+- [ ] Reproduce Figure 3
+- [ ] Vary P(T=1)
+- [ ] Figure and README completed
 
-## Phase 2 — Base technique : `neural-network-from-scratch`
-**En parallèle, petites sessions**
+## Phase 2 — Technical foundation: `neural-network-from-scratch`
+**In parallel, short sessions**
 
-- [ ] Corriger les 7 points listés dans son README
+- [ ] Fix the 7 points listed in its README
 - [ ] Gradient checking
-- [ ] Fonction d'entraînement réutilisable
+- [ ] Reusable training function
 
-## Phase 3 — Préparer les candidatures
-**7 – 14 décembre 2026**
+## Phase 3 — Prepare the applications
+**7 – 14 December 2026**
 
-- [ ] Lire un article récent de chaque groupe (passes 1 et 2)
-- [ ] Lire KS(conf) et la section 3 de QSGD (passes 1 et 2)
-- [ ] CV d'une page en anglais
-- [ ] Trois mails personnalisés (un article du groupe, une question précise, le projet lié)
-- [ ] Vérifier avec l'URCA : dates du stage, convention pour un stage à l'étranger
+- [ ] Read FedDP-KMeans and QuEST (passes 1 and 2)
+- [ ] Do the 30-minute first step of `federated-kmeans` and `quantized-training`
+- [ ] One-page CV in English
+- [ ] Three personalized emails (one paper from the group, one precise question, the linked project)
+- [ ] Check with the university: internship dates, agreement for an internship abroad
 
-## Phase 4 — Envoi
-**Vers le 15 décembre 2026**
+## Phase 4 — Send
+**Around 15 December 2026**
 
-- [ ] Envoyer les trois mails
-- [ ] Contacter en parallèle d'autres laboratoires (plan B)
+- [ ] Send the three emails
+- [ ] Contact other labs in parallel (plan B)
 
-## Phase 5 — Lampert et Alistarh
-**Vacances de fin d'année, puis après les partiels de janvier**
+## Phase 5 — Lampert and Alistarh
+**End-of-year holidays, then after the January exams**
 
-- [ ] `classifier-shift-detection` (KS(conf))
-- [ ] `quantized-sgd` (QSGD)
-- [ ] Relance polie vers le 10-15 janvier, avec les nouveaux résultats
+- [ ] `federated-kmeans`
+- [ ] `quantized-training`
+- [ ] Read *Rethinking Sparse Optimization* (passes 1 and 2)
+- [ ] Polite follow-up around 10-15 January, with the new results
 
-## Phase 6 — Si un groupe accepte
-**Avant début février 2027**
+## Phase 6 — If a group accepts
+**Before early February 2027**
 
-- [ ] Inscription sur le portail ISTA
-- [ ] Démarches administratives (convention, logement)
+- [ ] Portal registration
+- [ ] Administrative steps (internship agreement, housing)

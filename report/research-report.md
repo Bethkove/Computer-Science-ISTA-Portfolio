@@ -1,14 +1,14 @@
 # Research Report
 
-> Modèle de rapport, à utiliser d'abord pour `causal-effect-bias/` (copier ce fichier dans le dossier du projet le moment venu). Ne pas chercher à rédiger le rapport avant d'avoir obtenu les résultats expérimentaux.
+> Report template, to be used first for `causal-effect-bias/` (copy this file into the project folder when the time comes). Do not start writing the report before the experimental results exist.
 
 ## Title
 
-À définir.
+To be defined.
 
 ## Abstract
 
-À rédiger à la fin.
+To be written last.
 
 ## 1. Introduction
 
@@ -42,7 +42,7 @@
 
 ## 4. Results
 
-Présenter uniquement les résultats effectivement obtenus.
+Present only the results actually obtained.
 
 ### Quantitative results
 
@@ -52,23 +52,23 @@ Présenter uniquement les résultats effectivement obtenus.
 
 ## 5. Discussion
 
-- Que montrent les résultats ?
-- Les hypothèses sont-elles soutenues ?
-- Quelles observations sont surprenantes ?
-- Quels compromis apparaissent ?
+- What do the results show?
+- Are the hypotheses supported?
+- Which observations are surprising?
+- Which trade-offs appear?
 
 ## 6. Limitations
 
-Identifier les limites du protocole, de l'implémentation et de la généralisation.
+Identify the limitations of the protocol, of the implementation, and of generalization.
 
 ## 7. Future Work
 
-Proposer des expériences qui découlent réellement des résultats.
+Propose experiments that actually follow from the results.
 
 ## 8. Conclusion
 
-Répondre explicitement à la research question.
+Answer the research question explicitly.
 
 ## References
 
-À compléter avec les références réellement utilisées.
+To be completed with the references actually used.

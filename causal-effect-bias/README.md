@@ -1,82 +1,83 @@
-# Causal Effect Bias — quand un classifieur fausse un effet causal
+**English** | [Français](README.fr.md)
 
-**Groupe lié :** Causal Learning and Artificial Intelligence (Francesco Locatello, ISTA)
-**Article de départ :** Cadei, Lindorfer, Cremer, Schmid, Locatello, *Smoke and Mirrors in Causal Downstream Tasks*, NeurIPS 2024 — code : https://github.com/CausalLearningAI/ISTAnt
+# Causal Effect Bias — when a classifier distorts a causal effect
 
-**Calcul :** CPU uniquement (NumPy, scikit-learn). Chaque simulation prend quelques secondes.
+**Related group:** Causal Learning and Artificial Intelligence (Francesco Locatello, ISTA)
+**Starting paper:** Cadei, Lindorfer, Cremer, Schmid, Locatello, *Smoke and Mirrors in Causal Downstream Tasks*, NeurIPS 2024 — code: https://github.com/CausalLearningAI/ISTAnt
+**Compute:** CPU only (NumPy, scikit-learn). Each simulation takes seconds.
 
-## Contexte
+## Context
 
-Dans un essai randomisé, on veut estimer l'effet moyen d'un traitement (ATE). Quand le résultat n'est pas mesuré directement mais **prédit par un modèle**, les erreurs du modèle peuvent biaiser l'effet estimé, même avec une bonne précision.
+In a randomized trial we want the average treatment effect (ATE). When the outcome is not measured directly but **predicted by a model**, the model's errors can bias the estimated effect, even when its accuracy is high.
 
-L'article montre deux choses que cette étude reprend à petite échelle :
+The paper shows two things this study revisits at small scale:
 
-- **Théorème 3.1** : seuiller les probabilités prédites (les arrondir à 0 ou 1) biaise l'estimation de l'effet.
-- **Lemme 3.1** : le pire biais possible grandit quand le traitement est **déséquilibré** (borne en ε / min P(T=t)).
+- **Theorem 3.1:** thresholding predicted probabilities (rounding them to 0 or 1) biases the effect estimate.
+- **Lemma 3.1:** the worst-case bias grows when the treatment is **imbalanced** (bound in ε / min P(T=t)).
 
-Or l'exemple 1 de l'article utilise un traitement équilibré (p_T = 0,5).
+Yet Example 1 of the paper uses a balanced treatment (p_T = 0.5).
 
-## Question de recherche
+## Research question
 
-> Le biais dû au seuillage des prédictions change-t-il quand le traitement devient déséquilibré (P(T=1) de 0,5 à 0,1) ?
+> Does the bias caused by thresholding predictions change when the treatment becomes imbalanced (P(T=1) from 0.5 down to 0.1)?
 
-## Hypothèses (à écrire et dater par toi AVANT les expériences)
+## Hypotheses (write and date them yourself BEFORE running experiments)
 
-- H1 : <...>
-- H2 : <...>
+- H1: <...>
+- H2: <...>
 
-## Méthode
+## Method
 
-### Étape 1 — Reproduire l'exemple 1 (annexe B.1)
+### Step 1 — Reproduce Example 1 (Appendix B.1)
 
-Modèle causal simulé :
+Simulated causal model:
 
-- T ~ Bernoulli(p_T), W ~ N(0, 1), bruit n_X ~ N(0, 1), bruit n_Y ~ N(0, σ²_Y)
+- T ~ Bernoulli(p_T), W ~ N(0, 1), noise n_X ~ N(0, 1), noise n_Y ~ N(0, σ²_Y)
 - X = T + W + n_X
-- Y = 1 si X + n_Y ≥ 0, sinon 0
+- Y = 1 if X + n_Y ≥ 0, else 0
 
-Puis : régression logistique de Y sur X, prédictions brutes `f(X)` et seuillées `1[f(X) ≥ 0,5]`, et différence associationnelle empirique (EAD) calculée avec chacune.
+Then: logistic regression of Y on X, raw predictions `f(X)` and thresholded predictions `1[f(X) ≥ 0.5]`, and the empirical associational difference (EAD) computed with each.
 
-Objectif : retrouver la **figure 3** de l'article (EAD en fonction de n, 50 graines par n, p_T = 0,5, σ²_Y = 1).
+Goal: reproduce **Figure 3** of the paper (EAD as a function of n, 50 seeds per n, p_T = 0.5, σ²_Y = 1).
 
-### Étape 2 — Faire varier P(T=1)
+### Step 2 — Vary P(T=1)
 
-Mêmes simulations pour p_T ∈ {0,5 ; 0,3 ; 0,2 ; 0,1}. Mesurer l'écart entre l'EAD seuillée et la vraie AD, avec sa dispersion sur les graines.
+Same simulations for p_T ∈ {0.5, 0.3, 0.2, 0.1}. Measure the gap between the thresholded EAD and the true AD, with its spread across seeds.
 
-Vraie AD : calculable analytiquement (annexe B.1, équation 32) ou par une simulation de très grande taille. Indique laquelle tu utilises.
+True AD: computable analytically (Appendix B.1, Equation 32) or by one very large simulation. State which one you use.
 
-### Étape 3 (si le temps le permet)
+### Step 3 (if time allows)
 
-Faire varier σ²_Y : l'article affirme que le biais augmente avec la variance du bruit. Le vérifier.
+Vary σ²_Y: the paper states that the bias grows with the noise variance. Check it.
 
-## Première action (30 min, sans coder)
+## First step (30 min, no code)
 
-Relis l'annexe B.1. Sur papier, calcule `AD_{Y,T}` pour p_T = 0,5 et σ²_Y = 1 à l'aide des équations 27-28 et 32, puis la valeur seuillée (équation 33). Retrouves-tu un écart d'environ 0,042 (équation 37) ? Ce calcul deviendra ton premier test.
+Re-read Appendix B.1. On paper, compute `AD_{Y,T}` for p_T = 0.5 and σ²_Y = 1 with Equations 27-28 and 32, then the thresholded value (Equation 33). Do you get a gap of about 0.042 (Equation 37)? This computation becomes your first test.
 
-## Reproduire
+## Reproduce
 
 ```bash
 pip install -r ../requirements.txt
 python -m pytest
-# <commande pour lancer chaque expérience>
+# <command to run each experiment>
 ```
 
-Graines : <liste>. Matériel : <ton portable>.
+Seeds: <list>. Hardware: <your laptop>.
 
-## Résultats
+## Results
 
-<figures et chiffres réellement obtenus, avec leur dispersion>
+<figures and numbers actually obtained, with their spread>
 
-## Ce que les résultats soutiennent / ne soutiennent pas
+## What the results support / do not support
 
-## Limites
+## Limitations
 
-Données entièrement simulées et unidimensionnelles ; modèle bien spécifié (la régression logistique est proche du vrai mécanisme). À écrire honnêtement à la fin.
+Fully simulated, one-dimensional data; well-specified model (logistic regression is close to the true mechanism). Write this honestly at the end.
 
 ## Definition of Done
 
-- [ ] Hypothèses écrites et datées avant les résultats
-- [ ] Test : la valeur analytique de l'équation 37 est retrouvée
-- [ ] Figure 3 reproduite
-- [ ] Étude du déséquilibre avec plusieurs graines
-- [ ] README complété (résultats, limites)
+- [ ] Hypotheses written and dated before the results
+- [ ] Test: the analytical value of Equation 37 is recovered
+- [ ] Figure 3 reproduced
+- [ ] Imbalance study over several seeds
+- [ ] README completed (results, limitations)
