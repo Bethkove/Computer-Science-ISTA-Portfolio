@@ -6,9 +6,12 @@ venv/
 .pytest_cache/
 .ipynb_checkpoints/
 
-# Système
+# OS
 .DS_Store
 Thumbs.db
 
-# Données téléchargées par les scripts (ne pas versionner)
+# Data downloaded by scripts (not versioned)
 data/
+
+# Personal working documents (never versioned)
+_private/

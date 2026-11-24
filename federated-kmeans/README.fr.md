@@ -1,64 +1,36 @@
 [English](README.md) | **Français**
 
-# Federated k-Means — regrouper des données privées réparties sur plusieurs appareils
+# Federated k-Means
 
-**Groupe lié :** Machine Learning and Computer Vision (Christoph Lampert, ISTA)
-**Article de départ :** Scott, Lampert, Saulpic, *Differentially Private Federated k-Means Clustering with Server-Side Data*, ICML 2025 — https://arxiv.org/abs/2506.05408
-**Calcul :** CPU uniquement (NumPy, scikit-learn pour générer les données). Chaque run prend quelques secondes.
+Regrouper des données réparties entre de nombreux clients qui ne peuvent pas partager leurs données brutes, quand un bruit est ajouté pour protéger la confidentialité.
+
+**Groupe de recherche lié :** Machine Learning and Computer Vision (Christoph Lampert, ISTA)
 
 ## Contexte
 
-Les données sont souvent réparties sur de nombreux appareils (téléphones, hôpitaux) et ne peuvent pas être centralisées pour des raisons de confidentialité. Dans un k-means **fédéré**, chaque client n'envoie au serveur que des statistiques agrégées (sommes et effectifs par cluster), et le serveur met à jour les centres. Pour protéger la confidentialité, on ajoute du **bruit** à ces agrégats. L'article souligne qu'avec ce bruit, la partie difficile est **l'initialisation** des centres, et utilise pour cela un petit jeu de données détenu par le serveur (éventuellement différent des données des clients).
+Les données sont souvent réparties entre de nombreux appareils ou établissements et ne peuvent pas être centralisées. Dans un k-means **fédéré**, chaque client n'envoie au serveur que des statistiques agrégées (sommes et effectifs par cluster), et le serveur met à jour les centres des clusters. Pour protéger la confidentialité, un bruit est ajouté à ces agrégats, comme dans les algorithmes à confidentialité différentielle.
+
+Scott, Lampert et Saulpic (ICML 2025) soulignent que, dans ce cadre, **l'initialisation des centres** est la partie difficile, et proposent d'utiliser un petit jeu de données détenu par le serveur, éventuellement tiré d'une distribution différente de celle des clients.
 
 ## Question de recherche
 
-> Dans un k-means fédéré où l'on ajoute un bruit gaussien aux statistiques agrégées, à partir de quel niveau de bruit une initialisation à partir d'un petit jeu de données du serveur bat-elle nettement une initialisation aléatoire, et que se passe-t-il quand les données du serveur ne ressemblent pas à celles des clients ?
+> Avec un bruit ajouté aux statistiques agrégées, quand une initialisation à partir d'un petit jeu de données du serveur permet-elle au k-means fédéré de réussir là où une initialisation aléatoire échoue, et comment cela change-t-il quand les données du serveur ne ressemblent pas à celles des clients ?
 
-## Hypothèses (à écrire et dater par toi AVANT les expériences)
+## Démarche
 
-- H1 : <...>
-- H2 : <...>
+1. Implémenter le k-means (algorithme de Lloyd) et sa version fédérée, dans laquelle les clients envoient les sommes et effectifs par cluster, et le serveur ajoute un bruit gaussien aux totaux.
+2. Simuler des clients dont les données, tirées d'un mélange de gaussiennes, ne sont pas identiquement distribuées.
+3. Comparer plusieurs initialisations : aléatoire, k-means++ sur des données du serveur de même distribution, et k-means++ sur des données du serveur décalées (hors distribution).
+4. Mesurer le coût du clustering et la proportion de vrais clusters retrouvés, en fonction du niveau de bruit, sur de nombreuses graines aléatoires.
 
-## Méthode
+## Périmètre
 
-1. **Données :** un mélange de gaussiennes à k clusters (`sklearn.datasets.make_blobs`), réparti entre une dizaine de clients de façon **non IID** (chaque client voit surtout quelques clusters).
-2. **Itération de Lloyd fédérée :** chaque client calcule, pour ses propres points, les sommes et effectifs par cluster ; le serveur ajoute un bruit gaussien d'échelle σ aux totaux, puis recalcule les centres.
-3. **Initialisations :**
-   - aléatoire ;
-   - k-means++ sur un petit jeu de données du serveur tiré de la même distribution ;
-   - la même, avec des données du serveur tirées d'une distribution **décalée** (hors distribution).
-4. **Grille :** plusieurs niveaux de bruit σ, plusieurs graines.
-5. **Mesures :** coût du k-means sur toutes les données des clients ; proportion de vrais clusters retrouvés.
-6. Comparer ensuite avec l'initialisation réellement proposée dans l'article, une fois que tu l'auras lu.
+Le niveau de bruit est étudié comme un paramètre. Les garanties formelles de confidentialité (ε, δ) demandent le calcul de confidentialité de l'article original, qui sort du périmètre de cette étude sauf mention contraire dans les résultats.
 
-**Important :** sauf si tu implémentes le calcul de confidentialité de l'article, cette étude ne donne **aucune garantie formelle de confidentialité** (ε, δ). Écris-le dans les limites : ici, σ est un réglage de bruit, pas un niveau de confidentialité.
+## Cadre
 
-## Première action (30 min, sans coder)
+Python et NumPy (scikit-learn seulement pour générer les données et obtenir des résultats de référence), sur CPU. Toutes les données sont simulées.
 
-Lis le résumé, l'introduction et la vue d'ensemble de l'algorithme. Puis, sur papier : deux clients en 1D, deux centres. Le client A possède les points {0, 1, 2}, le client B possède {10, 11}. En partant des centres 1 et 9, fais **une** étape de Lloyd fédérée à la main (sommes, effectifs, nouveaux centres). Ajoute ensuite +2 de bruit à l'effectif du second cluster : de combien son centre se déplace-t-il ? Qu'est-ce que cela t'apprend sur les petits clusters bruités ? Ce calcul deviendra ton premier test.
+## Référence
 
-## Reproduire
-
-```bash
-pip install -r ../requirements.txt
-python -m pytest
-# <commande pour lancer chaque expérience>
-```
-
-## Résultats
-
-<figures et chiffres réellement obtenus, avec leur dispersion>
-
-## Ce que les résultats soutiennent / ne soutiennent pas
-
-## Limites
-
-Données synthétiques ; bruit sans calcul formel de confidentialité ; clients simulés sur une seule machine. À écrire honnêtement à la fin.
-
-## Definition of Done
-
-- [ ] Hypothèses écrites et datées avant les résultats
-- [ ] Test : l'étape de Lloyd calculée à la main est retrouvée par le code
-- [ ] Coût et clusters retrouvés en fonction de σ, pour chaque initialisation, sur plusieurs graines
-- [ ] Cas des données du serveur hors distribution
-- [ ] README complété (résultats, limites)
+J. Scott, C. H. Lampert, D. Saulpic. *Differentially Private Federated k-Means Clustering with Server-Side Data.* ICML 2025. https://arxiv.org/abs/2506.05408

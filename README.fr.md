@@ -2,33 +2,30 @@
 
 # Computer Science & AI — Portfolio de recherche
 
-Portfolio orienté recherche d'un étudiant de L3 Informatique (Université de Reims Champagne-Ardenne), construit pour candidater à un stage de recherche en apprentissage automatique.
+Portfolio orienté recherche d'un étudiant de L3 Informatique (Université de Reims Champagne-Ardenne), construit pour préparer un stage de recherche en apprentissage automatique.
 
 ## Objectif
 
-Montrer, à l'échelle d'un étudiant de licence, une capacité à :
+Chaque projet part d'un article de recherche récent, en reproduit une idée à petite échelle et pose une question précise à son sujet. Le but est de s'exercer, à un niveau licence, à :
 
-- comprendre les fondements mathématiques et algorithmiques ;
-- implémenter des méthodes sans dépendre entièrement de bibliothèques haut niveau ;
-- lire un article de recherche récent et en reproduire une idée à petite échelle ;
-- poser une question précise et concevoir une expérience contrôlée ;
-- analyser des résultats en distinguant observation, interprétation et conclusion ;
+- comprendre les fondements mathématiques et algorithmiques d'une méthode ;
+- l'implémenter sans dépendre entièrement de bibliothèques haut niveau ;
+- concevoir des expériences contrôlées, répétées sur plusieurs graines aléatoires ;
+- distinguer observation, interprétation et conclusion ;
 - documenter un travail reproductible, limites comprises.
 
 Tous les projets tournent sur un ordinateur portable (**CPU uniquement**).
-
----
 
 ## Graphe du portfolio
 
 ```mermaid
 flowchart TD
-    R["reading-notes<br/>articles lus,<br/>rattachés aux projets"]
+    R["research-notes<br/>articles lus,<br/>rattachés aux projets"]
     M["Maths de base<br/>dérivées, algèbre linéaire,<br/>probabilités"]
     NN["neural-network-from-scratch<br/>comprendre la<br/>rétropropagation"]
-    C["causal-effect-bias · Locatello<br/>le seuillage des prédictions<br/>biaise-t-il un effet causal ?"]
-    F["federated-kmeans · Lampert<br/>quand l'initialisation par<br/>le serveur compte-t-elle ?"]
-    Q["quantized-training · Alistarh<br/>avec combien de bits un petit<br/>réseau peut-il apprendre ?"]
+    C["causal-effect-bias<br/>résultats prédits<br/>et effets causaux"]
+    F["federated-kmeans<br/>regrouper des données privées<br/>réparties entre clients"]
+    Q["quantized-training<br/>entraîner un réseau<br/>avec très peu de bits"]
     RC["rapport :<br/>causal-effect-bias"]
     RF["rapport :<br/>federated-kmeans"]
     RQ["rapport :<br/>quantized-training"]
@@ -45,47 +42,16 @@ flowchart TD
 
 ## Projets
 
-| Projet | Question | Article | Statut |
-|---|---|---|---|
-| [neural-network-from-scratch](neural-network-from-scratch/README.fr.md) | Construire et vérifier un réseau de neurones en NumPy | — (base technique) | En cours |
-| [causal-effect-bias](causal-effect-bias/README.fr.md) | Le biais dû au seuillage des prédictions change-t-il quand le traitement est déséquilibré ? | Cadei et al., NeurIPS 2024 | À démarrer |
-| [federated-kmeans](federated-kmeans/README.fr.md) | Avec du bruit de confidentialité, quand un petit jeu de données sur le serveur fait-il fonctionner un k-means fédéré ? | Scott, Lampert et Saulpic, ICML 2025 | À démarrer |
-| [quantized-training](quantized-training/README.fr.md) | Une transformation de Hadamard rend-elle plus précis l'entraînement en basse précision d'un petit réseau ? | Panferov et al. (QuEST), 2025 | À démarrer |
+| Projet | Question | Article de départ |
+|---|---|---|
+| [neural-network-from-scratch](neural-network-from-scratch/README.fr.md) | Comment un réseau de neurones apprend-il, écrit à partir des principes de base en NumPy ? | — (base technique) |
+| [causal-effect-bias](causal-effect-bias/README.fr.md) | Comment le déséquilibre du traitement affecte-t-il les estimations d'effet causal calculées à partir des prédictions d'un classifieur ? | Cadei et al., *Smoke and Mirrors in Causal Downstream Tasks*, NeurIPS 2024 |
+| [federated-kmeans](federated-kmeans/README.fr.md) | Avec un bruit ajouté pour protéger la confidentialité, quand un petit jeu de données sur le serveur fait-il fonctionner un k-means fédéré ? | Scott, Lampert et Saulpic, *Differentially Private Federated k-Means Clustering with Server-Side Data*, ICML 2025 |
+| [quantized-training](quantized-training/README.fr.md) | Une transformation de Hadamard avant la quantification aide-t-elle un petit réseau à apprendre avec très peu de bits ? | Panferov et al., *QuEST: Stable Training of LLMs with 1-Bit Weights and Activations*, 2025 |
 
-Chaque README de projet donne la question, la méthode, une **première action** de 30 minutes et une Definition of Done.
+## Organisation du dépôt
 
-## Arborescence
-
-```text
-.
-├── README.md / README.fr.md
-├── ROADMAP.md / ROADMAP.fr.md
-├── requirements.txt
-├── .gitignore
-│
-├── neural-network-from-scratch/
-│   ├── README.md / README.fr.md
-│   ├── neuron.py
-│   ├── catdogneuron.py
-│   ├── utilities.py
-│   └── datasets/
-│
-├── causal-effect-bias/          README.md / README.fr.md
-├── federated-kmeans/            README.md / README.fr.md
-├── quantized-training/          README.md / README.fr.md
-│
-├── research-notes/
-│   ├── README.md / README.fr.md
-│   ├── smoke-and-mirrors.md
-│   ├── feddp-kmeans.md
-│   ├── quest.md
-│   └── sparse-pruning.md
-│
-└── report/
-    └── research-report.md
-```
-
-Les dossiers `src/`, `tests/`, `experiments/` et `results/` sont créés **au moment où ils deviennent nécessaires**. Aucun fichier vide ou placeholder n'est ajouté uniquement pour faire apparaître une arborescence.
+Chaque projet a son propre dossier et son propre README. Le code, les tests, les expériences et les résultats sont ajoutés au dossier d'un projet au fil du travail. Les notes de lecture sont dans [`research-notes/`](research-notes/README.fr.md).
 
 ## Installation
 
@@ -95,13 +61,12 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-## Definition of Done
+## Règles de travail
 
-Un projet est terminé lorsqu'il possède :
+Toutes les études de ce dépôt suivent les mêmes règles :
 
-- une question et des hypothèses écrites **avant** les résultats ;
-- une implémentation lisible, avec des tests sur des cas calculables à la main ;
-- des expériences répétées sur plusieurs graines ;
-- des résultats sauvegardés et des figures ;
-- une section « limites » honnête ;
-- un README qui permet à quiconque de tout reproduire.
+- la question et les hypothèses sont écrites et commitées **avant** les résultats ;
+- les implémentations sont testées sur des cas calculables à la main ;
+- les expériences sont répétées sur plusieurs graines et présentées avec leur dispersion ;
+- les conclusions se limitent à ce que les expériences soutiennent, et les limites sont écrites explicitement ;
+- les résultats sont reproductibles à partir du README du projet.

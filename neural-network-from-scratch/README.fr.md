@@ -2,64 +2,29 @@
 
 # Neural Network from Scratch
 
-## Objectif
+Un réseau de neurones écrit en **Python et NumPy** à partir des principes de base, sans PyTorch ni TensorFlow, pour comprendre de bout en bout la passe avant, la rétropropagation et la descente de gradient.
 
-Construire un petit réseau de neurones en **Python + NumPy**, sans PyTorch ni TensorFlow, pour comprendre de bout en bout le forward, la rétropropagation et la descente de gradient.
+Ce projet est la base technique du portfolio : [`quantized-training`](../quantized-training/README.fr.md) réutilise son code d'entraînement.
 
-Ce projet est la **base technique** du portfolio : l'étude `quantized-training/` réutilise directement le code d'entraînement écrit ici.
+## Contenu
 
-## État actuel
+| Fichier | Description |
+|---|---|
+| `neuron.py` | Un neurone artificiel (régression logistique) entraîné par descente de gradient sur des données synthétiques en deux dimensions (`sklearn.datasets.make_blobs`) |
+| `catdogneuron.py` | Le même neurone appliqué à une classification d'images binaire (chats contre chiens) |
+| `utilities.py` | Chargement du jeu de données chats/chiens depuis des fichiers HDF5 |
+| `datasets/` | 1 000 images d'entraînement et 200 images de test en niveaux de gris, 64×64 pixels, réparties à égalité entre les deux classes |
 
-| Fichier | Contenu | État |
-|---|---|---|
-| `neuron.py` | Un neurone artificiel (régression logistique) sur des données 2D (`make_blobs`) | Écrit, contient des bugs (voir plus bas) |
-| `catdogneuron.py` | Le même neurone sur le jeu chat/chien | En cours, ne tourne pas encore |
-| `utilities.py` | Chargement des données chat/chien (HDF5) | Fonctionnel |
-| `datasets/` | 1000 images d'entraînement et 200 de test, 64×64, niveaux de gris, classes équilibrées | Présent |
+## Périmètre
 
-Si ces données viennent d'un tutoriel, cite la source ici.
+Le projet progresse d'un neurone unique vers un réseau à une couche cachée, puis vers la classification multiclasse :
 
-## À corriger avant d'aller plus loin
+1. un neurone unique avec activation sigmoïde et perte logistique ;
+2. des gradients vérifiés par différences finies ;
+3. un réseau à une couche cachée avec une rétropropagation écrite à la main ;
+4. une sortie softmax et une perte d'entropie croisée pour le jeu de chiffres à 10 classes (`sklearn.datasets.load_digits`) ;
+5. une fonction d'entraînement réutilisable, sur laquelle est construit l'entraînement quantifié.
 
-Ces problèmes sont à corriger **par toi** ; chacun est un petit exercice.
+## Cadre
 
-1. **`neuron.py`, lignes 68-75** : `W` et `b` sont utilisés avant d'être définis (`artificial_neuron` n'est appelé qu'à la ligne 77). Que se passe-t-il à l'exécution, et comment réordonner le script ?
-2. **`plt.show` sans parenthèses** (`neuron.py` ligne 65, `catdogneuron.py` ligne 70) : la courbe de perte ne s'affiche pas. Pourquoi ?
-3. **`catdogneuron.py`** : `X_train` a la forme `(1000, 64, 64)`. Quelle forme doit avoir `X` pour que `X.dot(W)` fonctionne avec un `W` de forme `(n_features, 1)` ?
-4. **Normalisation** : les pixels vont de 0 à 254. Que devient `np.exp(-Z)` avec des entrées de cet ordre ? Que faut-il faire avant l'entraînement ?
-5. **`log_loss`** : que vaut `np.log(A)` si `A` vaut exactement 0 ou 1 ? Ajoute une petite constante `epsilon` et explique ton choix.
-6. **`catdogneuron.py`, ligne 8** : le chemin Windows écrit en dur empêche quiconque d'autre de lancer le script. Comment s'en passer ?
-7. **Code dupliqué** : `catdogneuron.py` recopie toutes les fonctions de `neuron.py`. Regroupe-les dans un module importé par les deux scripts.
-
-## Étapes suivantes (version réduite, compatible avec le calendrier)
-
-1. Corriger les 7 points ci-dessus.
-2. Vérifier `gradients` par **gradient checking** (comparer à des différences finies) dans un premier test `pytest`.
-3. Passer du neurone unique à un réseau à **une couche cachée** : `input → Dense → ReLU/Sigmoid → Dense → Sigmoid`, avec rétropropagation écrite à la main.
-4. Entraîner sur chat/chien, puis sur `sklearn.datasets.load_digits` (10 classes, nécessite Softmax + Cross-Entropy).
-5. Exposer une fonction d'entraînement qui fait passer les poids par une fonction avant la passe avant : c'est l'endroit où `quantized-training/` branchera la quantification.
-
-Le reste du plan initial (MNIST complet, nombreuses expériences d'hyperparamètres) passe après les candidatures.
-
-## Structure cible
-
-```text
-neural-network-from-scratch/
-├── README.md / README.fr.md
-├── neuron.py
-├── catdogneuron.py
-├── utilities.py
-├── datasets/
-└── tests/            ← à créer avec le premier test de gradient
-```
-
-Créer chaque dossier uniquement lorsqu'il reçoit son premier contenu utile.
-
-## Definition of Done
-
-- [ ] Les 7 points corrigés
-- [ ] Gradient checking réussi (test `pytest`)
-- [ ] Réseau à une couche cachée entraînable
-- [ ] Courbe de perte et précision test sur chat/chien
-- [ ] Fonction d'entraînement réutilisable par `quantized-training/`
-- [ ] Analyse courte : ce qui marche, ce qui ne marche pas, pourquoi
+Python, NumPy, h5py et Matplotlib, sur CPU.

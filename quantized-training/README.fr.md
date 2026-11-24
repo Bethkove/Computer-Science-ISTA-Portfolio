@@ -1,70 +1,36 @@
 [English](README.md) | **Français**
 
-# Quantized Training — avec combien de bits un petit réseau peut-il apprendre ?
+# Quantized Training
 
-**Groupe lié :** Distributed Algorithms and Systems Lab (Dan Alistarh, ISTA)
-**Article de départ :** Panferov, Chen, Tabesh, Castro, Nikdan, Alistarh, *QuEST: Stable Training of LLMs with 1-Bit Weights and Activations*, prépublication arXiv, 2025 — https://arxiv.org/abs/2502.05003
-**Lecture complémentaire :** Kuznedelev, Kurtic, Iofinova, Frantar, Peste, Alistarh, *Accurate Neural Network Pruning Requires Rethinking Sparse Optimization*, TMLR 2024
-**Calcul :** CPU uniquement (NumPy, SciPy). Réutilise `neural-network-from-scratch/`.
+Entraîner un petit réseau de neurones dont les poids sont limités à très peu de bits.
+
+**Groupe de recherche lié :** Distributed Algorithms and Systems Lab (Dan Alistarh, ISTA)
 
 ## Contexte
 
-Les grands modèles coûtent cher à entraîner et à faire tourner. **L'entraînement quantifié** (quantization-aware training) entraîne un réseau dont les poids sont arrondis sur très peu de bits lors de la passe avant, tout en gardant des copies en pleine précision pour les mises à jour. QuEST fait fonctionner cela jusqu'à une très faible précision. L'un de ses ingrédients consiste à appliquer une **transformation de Hadamard** (une matrice orthogonale qui « mélange » les valeurs) avant de quantifier, pour étaler les valeurs extrêmes, puis à ajuster l'échelle de quantification en minimisant l'erreur.
+Les grands modèles coûtent cher à entraîner et à faire tourner. **L'entraînement quantifié** (quantization-aware training) entraîne un réseau dont les poids sont arrondis sur quelques bits lors de la passe avant, tandis que des copies en pleine précision reçoivent les mises à jour. QuEST (Panferov et al., 2025) rend cet entraînement stable jusqu'à une très faible précision. L'un de ses ingrédients consiste à appliquer une **transformation de Hadamard**, une matrice orthogonale qui mélange les coordonnées, avant la quantification, afin d'étaler les valeurs extrêmes, et à choisir l'échelle de quantification qui minimise l'erreur.
 
-Cette étude teste cet ingrédient sur un **petit** réseau qui s'entraîne sur un portable.
+Cette étude examine cet ingrédient sur un réseau assez petit pour s'entraîner sur un ordinateur portable.
 
 ## Question de recherche
 
-> Lors de l'entraînement d'un petit MLP dont les poids sont quantifiés sur 4, 2 et 1 bits, appliquer une transformation de Hadamard avant la quantification réduit-il l'erreur de quantification et améliore-t-il la précision en test par rapport à une quantification directe ?
+> Lorsqu'un petit perceptron multicouche est entraîné avec des poids quantifiés sur 8, 4, 2 et 1 bits, appliquer une transformation de Hadamard avant la quantification réduit-il l'erreur de quantification et améliore-t-il la précision en test par rapport à une quantification directe des poids ?
 
-## Hypothèses (à écrire et dater par toi AVANT les expériences)
+## Démarche
 
-- H1 : <...>
-- H2 : <...>
+1. Implémenter un quantificateur uniforme symétrique, avec une échelle fixée soit par le plus grand poids en valeur absolue, soit en minimisant l'erreur quadratique de quantification.
+2. Entraîner un perceptron multicouche, écrit à partir de zéro dans [`neural-network-from-scratch`](../neural-network-from-scratch/README.fr.md), sur le jeu de chiffres de scikit-learn, avec un entraînement quantifié et l'estimateur de gradient straight-through.
+3. Comparer trois variantes : pleine précision, quantification directe, et quantification après une transformation de Hadamard normalisée.
+4. Mesurer la précision en test, les courbes d'entraînement et l'erreur de quantification pour chaque nombre de bits, sur de nombreuses graines aléatoires.
 
-## Méthode
+Une lecture complémentaire sur la parcimonie, *Accurate Neural Network Pruning Requires Rethinking Sparse Optimization*, encadre une extension possible vers l'élagage par magnitude.
 
-1. **Modèle de base :** ton réseau de `neural-network-from-scratch/`, sur `sklearn.datasets.load_digits` (chiffres 8×8 ; la taille de la couche cachée doit être une puissance de 2, par exemple 64 ou 128, pour que la matrice de Hadamard existe).
-2. **Quantificateur :** quantification uniforme symétrique sur b bits avec une échelle par matrice de poids ; d'abord une échelle fixée par la valeur absolue maximale, puis une échelle choisie pour minimiser l'erreur quadratique.
-3. **Entraînement quantifié :** passe avant avec les poids quantifiés ; passe arrière avec l'**estimateur straight-through** (l'arrondi est traité comme l'identité) ; mise à jour des poids en pleine précision.
-4. **Variante Hadamard :** quantifier `H W` au lieu de `W` (H : matrice de Hadamard normalisée, `scipy.linalg.hadamard(n) / sqrt(n)`), puis revenir en arrière avec `Hᵀ`.
-5. **Comparaison :** pleine précision, quantification directe, Hadamard + quantification ; b ∈ {8, 4, 2, 1} ; plusieurs graines.
-6. **Mesures :** précision en test, courbes de perte d'entraînement, erreur de quantification ‖W − Q(W)‖.
-7. L'estimateur de gradient « de confiance » de QuEST : l'ajouter **seulement** si tu le comprends à la lecture de l'article.
+## Cadre
 
-**Extension optionnelle (issue de la lecture complémentaire) :** élagage par magnitude à forte parcimonie (80 à 95 %) du même réseau, avec un réentraînement court ou plus long.
+Python, NumPy et SciPy, sur CPU. Seuls les poids sont quantifiés, sauf mention contraire dans les résultats.
 
-## Première action (30 min, sans coder)
+## Références
 
-Lis le résumé, l'introduction et la vue d'ensemble de la méthode de QuEST. Puis, sur papier, prends le vecteur v = (0,9 ; −0,1 ; 0,05 ; −0,02) :
+A. Panferov, J. Chen, S. Tabesh, R. L. Castro, M. Nikdan, D. Alistarh. *QuEST: Stable Training of LLMs with 1-Bit Weights and Activations.* arXiv:2502.05003, 2025.
 
-1. Quantifie-le sur 2 bits avec une échelle fixée par la valeur absolue maximale, et calcule l'erreur quadratique.
-2. Multiplie-le d'abord par la matrice de Hadamard normalisée 4×4, quantifie le résultat de la même façon, reviens en arrière, et calcule à nouveau l'erreur quadratique.
-3. Refais les deux calculs sur 3 bits.
-
-Quelle erreur est la plus petite dans chaque cas ? La réponse est-elle la même sur 2 et sur 3 bits, et pourquoi ? Ce calcul deviendra ton premier test, et il devrait orienter tes hypothèses.
-
-## Reproduire
-
-```bash
-pip install -r ../requirements.txt
-python -m pytest
-# <commande pour lancer chaque expérience>
-```
-
-## Résultats
-
-<figures et chiffres réellement obtenus, avec leur dispersion>
-
-## Ce que les résultats soutiennent / ne soutiennent pas
-
-## Limites
-
-Très petits modèle et jeu de données ; poids seulement (pas de quantification des activations, sauf si tu l'ajoutes) ; aucun gain de vitesse matériel mesuré. À écrire honnêtement à la fin.
-
-## Definition of Done
-
-- [ ] Hypothèses écrites et datées avant les résultats
-- [ ] Tests : quantificateur et transformation de Hadamard vérifiés sur des cas calculés à la main
-- [ ] Précision et erreur de quantification pour chaque nombre de bits, avec et sans Hadamard, sur plusieurs graines
-- [ ] README complété (résultats, limites)
+D. Kuznedelev, E. Kurtic, E. Iofinova, E. Frantar, A. Peste, D. Alistarh. *Accurate Neural Network Pruning Requires Rethinking Sparse Optimization.* TMLR 2024.

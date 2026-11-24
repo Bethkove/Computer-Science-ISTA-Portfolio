@@ -1,83 +1,37 @@
 **English** | [Français](README.fr.md)
 
-# Causal Effect Bias — when a classifier distorts a causal effect
+# Causal Effect Bias
 
-**Related group:** Causal Learning and Artificial Intelligence (Francesco Locatello, ISTA)
-**Starting paper:** Cadei, Lindorfer, Cremer, Schmid, Locatello, *Smoke and Mirrors in Causal Downstream Tasks*, NeurIPS 2024 — code: https://github.com/CausalLearningAI/ISTAnt
-**Compute:** CPU only (NumPy, scikit-learn). Each simulation takes seconds.
+How reliable is a causal-effect estimate when the outcome is not measured but predicted by a classifier?
+
+**Related research group:** Causal Learning and Artificial Intelligence (Francesco Locatello, ISTA)
 
 ## Context
 
-In a randomized trial we want the average treatment effect (ATE). When the outcome is not measured directly but **predicted by a model**, the model's errors can bias the estimated effect, even when its accuracy is high.
+In a randomized controlled trial, the average treatment effect (ATE) is identified by a simple difference of means between treated and control units. In many scientific experiments, however, the outcome is recorded in high-dimensional observations (images, videos) and is **predicted by a machine-learning model** rather than measured directly.
 
-The paper shows two things this study revisits at small scale:
+Cadei et al. (NeurIPS 2024) show that this step can bias the causal conclusion even when the classifier is accurate. Two of their results motivate this study:
 
-- **Theorem 3.1:** thresholding predicted probabilities (rounding them to 0 or 1) biases the effect estimate.
-- **Lemma 3.1:** the worst-case bias grows when the treatment is **imbalanced** (bound in ε / min P(T=t)).
+- **Theorem 3.1:** thresholding predicted probabilities into hard labels biases the effect estimate, even for a consistent classifier.
+- **Lemma 3.1:** the worst-case bias of a classifier with error rate ε scales as ε / min_t P(T = t), so it can grow when the treatment is imbalanced.
 
-Yet Example 1 of the paper uses a balanced treatment (p_T = 0.5).
+Their illustrative simulation (Example 1, Appendix B.1) uses a balanced treatment.
 
 ## Research question
 
-> Does the bias caused by thresholding predictions change when the treatment becomes imbalanced (P(T=1) from 0.5 down to 0.1)?
+> How does treatment imbalance affect the bias and the variability of causal-effect estimates computed from raw versus thresholded classifier predictions?
 
-## Hypotheses (write and date them yourself BEFORE running experiments)
+## Approach
 
-- H1: <...>
-- H2: <...>
+1. Reproduce the simulation of Example 1: a structural causal model in which T is a binary treatment, X = T + W + noise, and Y = 1[X + noise ≥ 0]; a logistic regression predicts Y from X, and the effect is estimated from raw and from thresholded predictions.
+2. Derive the population-level values of the true and thresholded effects analytically, and check them against simulation.
+3. Vary the treatment probability P(T = 1) and measure, over many random seeds, both the average deviation from the true effect and its spread.
+4. Study a setting in which the classifier's errors are not shared equally between the two treatment groups, the situation described by the worst case of Lemma 3.1.
 
-## Method
+## Setting
 
-### Step 1 — Reproduce Example 1 (Appendix B.1)
+Python, NumPy, SciPy and scikit-learn, on CPU. All data is simulated.
 
-Simulated causal model:
+## Reference
 
-- T ~ Bernoulli(p_T), W ~ N(0, 1), noise n_X ~ N(0, 1), noise n_Y ~ N(0, σ²_Y)
-- X = T + W + n_X
-- Y = 1 if X + n_Y ≥ 0, else 0
-
-Then: logistic regression of Y on X, raw predictions `f(X)` and thresholded predictions `1[f(X) ≥ 0.5]`, and the empirical associational difference (EAD) computed with each.
-
-Goal: reproduce **Figure 3** of the paper (EAD as a function of n, 50 seeds per n, p_T = 0.5, σ²_Y = 1).
-
-### Step 2 — Vary P(T=1)
-
-Same simulations for p_T ∈ {0.5, 0.3, 0.2, 0.1}. Measure the gap between the thresholded EAD and the true AD, with its spread across seeds.
-
-True AD: computable analytically (Appendix B.1, Equation 32) or by one very large simulation. State which one you use.
-
-### Step 3 (if time allows)
-
-Vary σ²_Y: the paper states that the bias grows with the noise variance. Check it.
-
-## First step (30 min, no code)
-
-Re-read Appendix B.1. On paper, compute `AD_{Y,T}` for p_T = 0.5 and σ²_Y = 1 with Equations 27-28 and 32, then the thresholded value (Equation 33). Do you get a gap of about 0.042 (Equation 37)? This computation becomes your first test.
-
-## Reproduce
-
-```bash
-pip install -r ../requirements.txt
-python -m pytest
-# <command to run each experiment>
-```
-
-Seeds: <list>. Hardware: <your laptop>.
-
-## Results
-
-<figures and numbers actually obtained, with their spread>
-
-## What the results support / do not support
-
-## Limitations
-
-Fully simulated, one-dimensional data; well-specified model (logistic regression is close to the true mechanism). Write this honestly at the end.
-
-## Definition of Done
-
-- [ ] Hypotheses written and dated before the results
-- [ ] Test: the analytical value of Equation 37 is recovered
-- [ ] Figure 3 reproduced
-- [ ] Imbalance study over several seeds
-- [ ] README completed (results, limitations)
+R. Cadei, L. Lindorfer, S. Cremer, C. Schmid, F. Locatello. *Smoke and Mirrors in Causal Downstream Tasks.* NeurIPS 2024. Code: https://github.com/CausalLearningAI/ISTAnt
