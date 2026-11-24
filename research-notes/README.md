@@ -37,10 +37,13 @@ Revenir sur les équations réellement nécessaires pour comprendre la méthode.
 
 ## Articles
 
-1. QSGD — Communication-Efficient SGD via Gradient Quantization and Encoding
-2. KS(conf) — A Light-Weight Test if a Multiclass Classifier Operates Outside of Its Specifications
-3. Unifying Causal Representation Learning with the Invariance Principle
-4. T1-PILOT — Physics-Informed Learned Optimized Trajectories for T1 Mapping Acceleration
-5. Spurious Correlations in High Dimensional Regression
+| Article | Groupe | Projet lié | Profondeur visée |
+|---|---|---|---|
+| [Smoke and Mirrors in Causal Downstream Tasks](smoke-and-mirrors.md) | Locatello | `causal-effect-bias/` | Passes 1 à 4 |
+| [QSGD](qsgd.md) | Alistarh | `quantized-sgd/` | Passes 1 à 3 (section 3) |
+| [KS(conf)](ks-conf.md) | Lampert | `classifier-shift-detection/` | Passes 1 à 4 |
+| [Unifying Causal Representation Learning with the Invariance Principle](causal-representation-learning.md) | Locatello | lecture de contexte | Passes 1 et 2 seulement |
+
+Pour chaque groupe, ajouter avant d'écrire le mail un article récent pris sur la page du groupe (passes 1 et 2).
 
 Les notes doivent être personnelles : ne pas recopier le papier. Le but est de montrer la compréhension et la capacité à poser des questions.

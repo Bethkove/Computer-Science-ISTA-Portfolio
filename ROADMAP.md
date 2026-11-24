@@ -1,99 +1,54 @@
 # Portfolio Roadmap
 
-## Phase 1 — Neural Network from Scratch
-**Période cible : 1–12 octobre 2026**
+**Objectif :** stage de recherche à partir de début avril 2027.
+**Contrainte ISTA :** inscription sur le portail terminée au moins 2 mois avant le début, donc vers début février. Les groupes doivent avoir été contactés bien avant : **mails vers le 15 décembre 2026**.
 
-### Étapes
-- [ ] Définir l'API minimale du réseau
-- [ ] Implémenter Dense
-- [ ] Implémenter ReLU
-- [ ] Implémenter Sigmoid / Softmax
-- [ ] Implémenter MSE
-- [ ] Implémenter Cross-Entropy
-- [ ] Implémenter forward pass
-- [ ] Implémenter backward pass
-- [ ] Implémenter SGD
-- [ ] Ajouter gradient checking
-- [ ] Ajouter tests unitaires
-- [ ] Entraîner sur MNIST
-- [ ] Mesurer loss / accuracy
-- [ ] Tester plusieurs learning rates
-- [ ] Tester plusieurs tailles de couche cachée
-- [ ] Produire les graphiques
-- [ ] Documenter les observations
-
-### Résultat attendu
-Une petite bibliothèque de réseau neuronal NumPy compréhensible de bout en bout, accompagnée d'expériences quantitatives.
+Les périodes sont indicatives ; ce qui compte est l'ordre.
 
 ---
 
-## Phase 2 — Evolutionary Optimization
-**Période cible : 13–19 octobre 2026**
+## Phase 1 — Locatello : `causal-effect-bias`
+**25 novembre – 6 décembre 2026**
 
-### Étapes
-- [ ] Définir le problème TSP
-- [ ] Générer des instances de villes
-- [ ] Implémenter un baseline glouton
-- [ ] Implémenter simulated annealing
-- [ ] Implémenter genetic algorithm
-- [ ] Définir les paramètres expérimentaux
-- [ ] Tester 10 / 25 / 50 / 100 villes
-- [ ] Mesurer distance finale
-- [ ] Mesurer temps d'exécution
-- [ ] Mesurer convergence
-- [ ] Comparer les méthodes
-- [ ] Documenter les limites
+- [ ] Lire *Smoke and Mirrors* (passes 1 et 2, puis passe 3 sur le lemme 3.1, le théorème 3.1 et l'annexe B.1)
+- [ ] Calculer à la main l'écart de l'équation 37
+- [ ] Écrire les hypothèses
+- [ ] Test : valeur analytique retrouvée
+- [ ] Reproduire la figure 3
+- [ ] Faire varier P(T=1)
+- [ ] Figure et README complétés
 
-### Résultat attendu
-Une comparaison expérimentale propre de plusieurs stratégies d'optimisation.
+## Phase 2 — Base technique : `neural-network-from-scratch`
+**En parallèle, petites sessions**
 
----
+- [ ] Corriger les 7 points listés dans son README
+- [ ] Gradient checking
+- [ ] Fonction d'entraînement réutilisable
 
-## Phase 3 — Graph Analysis
-**Période cible : 20–23 octobre 2026**
+## Phase 3 — Préparer les candidatures
+**7 – 14 décembre 2026**
 
-### Étapes
-- [ ] Concevoir Graph
-- [ ] Implémenter adjacency list
-- [ ] Implémenter BFS
-- [ ] Implémenter DFS
-- [ ] Implémenter shortest paths
-- [ ] Implémenter connected components
-- [ ] Implémenter degree centrality
-- [ ] Implémenter PageRank
-- [ ] Construire quelques graphes de test
-- [ ] Visualiser les résultats
-- [ ] Documenter la complexité
-- [ ] Ajouter les tests
+- [ ] Lire un article récent de chaque groupe (passes 1 et 2)
+- [ ] Lire KS(conf) et la section 3 de QSGD (passes 1 et 2)
+- [ ] CV d'une page en anglais
+- [ ] Trois mails personnalisés (un article du groupe, une question précise, le projet lié)
+- [ ] Vérifier avec l'URCA : dates du stage, convention pour un stage à l'étranger
 
-### Résultat attendu
-Une implémentation algorithmique claire permettant d'analyser plusieurs propriétés de graphes.
+## Phase 4 — Envoi
+**Vers le 15 décembre 2026**
 
----
+- [ ] Envoyer les trois mails
+- [ ] Contacter en parallèle d'autres laboratoires (plan B)
 
-## Phase 4 — Research Report
-**Période cible : 24–26 octobre 2026**
+## Phase 5 — Lampert et Alistarh
+**Vacances de fin d'année, puis après les partiels de janvier**
 
-- [ ] Choisir la question de recherche
-- [ ] Définir les hypothèses
-- [ ] Décrire la méthodologie
-- [ ] Décrire le protocole expérimental
-- [ ] Présenter les résultats
-- [ ] Discuter les résultats
-- [ ] Identifier les limites
-- [ ] Proposer des pistes futures
-- [ ] Ajouter les références
+- [ ] `classifier-shift-detection` (KS(conf))
+- [ ] `quantized-sgd` (QSGD)
+- [ ] Relance polie vers le 10-15 janvier, avec les nouveaux résultats
 
----
+## Phase 6 — Si un groupe accepte
+**Avant début février 2027**
 
-## Phase 5 — Finalisation
-**Période cible : 27–31 octobre 2026**
-
-- [ ] Nettoyer les repositories
-- [ ] Vérifier tous les tests
-- [ ] Vérifier la reproductibilité
-- [ ] Nettoyer les notebooks/scripts inutiles
-- [ ] Vérifier les README
-- [ ] Vérifier les graphiques
-- [ ] Vérifier les références
-- [ ] Faire une dernière revue du portfolio
+- [ ] Inscription sur le portail ISTA
+- [ ] Démarches administratives (convention, logement)

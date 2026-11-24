@@ -1,6 +1,6 @@
 # Research Report
 
-> Ce document sera rempli après les projets et les lectures. Ne pas chercher à rédiger le rapport final avant d'avoir obtenu les résultats expérimentaux.
+> Modèle de rapport, à utiliser d'abord pour `causal-effect-bias/` (copier ce fichier dans le dossier du projet le moment venu). Ne pas chercher à rédiger le rapport avant d'avoir obtenu les résultats expérimentaux.
 
 ## Title
 

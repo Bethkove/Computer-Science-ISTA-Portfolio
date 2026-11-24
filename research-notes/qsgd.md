@@ -2,7 +2,8 @@
 
 **Paper:** Communication-Efficient SGD via Gradient Quantization and Encoding  
 **Authors:** Alistarh et al.  
-**Venue:** NeurIPS 2017
+**Venue:** NeurIPS 2017  
+**Projet lié :** `quantized-sgd/`
 
 ## Lecture
 

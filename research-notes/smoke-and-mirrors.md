@@ -1,13 +1,16 @@
-# T1-PILOT
+# Smoke and Mirrors in Causal Downstream Tasks
 
-**Paper:** Physics-Informed Learned Optimized Trajectories for T1 Mapping Acceleration  
-**Venue:** MIDL 2026
+**Paper:** Smoke and Mirrors in Causal Downstream Tasks
+**Authors:** Cadei, Lindorfer, Cremer, Schmid, Locatello
+**Venue:** NeurIPS 2024
+**Groupe :** Locatello (ISTA)
+**Projet lié :** `causal-effect-bias/`
 
 ## Lecture
 
 - [ ] Pass 1
 - [ ] Pass 2
-- [ ] Pass 3
+- [ ] Pass 3 (lemme 3.1, théorème 3.1, annexe B.1)
 - [ ] Pass 4
 
 ## Research question

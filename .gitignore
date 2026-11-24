@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Données téléchargées par les scripts (ne pas versionner)
+data/

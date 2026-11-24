@@ -2,7 +2,8 @@
 
 **Paper:** A Light-Weight Test if a Multiclass Classifier Operates Outside of Its Specifications  
 **Authors:** Sun & Lampert  
-**Venue:** IJCV 2020
+**Venue:** IJCV 2020  
+**Projet lié :** `classifier-shift-detection/`
 
 ## Lecture
 

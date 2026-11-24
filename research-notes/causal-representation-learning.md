@@ -1,7 +1,9 @@
 # Causal Representation Learning
 
 **Paper:** Unifying Causal Representation Learning with the Invariance Principle  
-**Venue:** ICLR 2025
+**Authors:** Yao et al. (dont Locatello)  
+**Venue:** ICLR 2025  
+**Usage :** lecture de contexte pour le groupe Locatello (passes 1 et 2 ; la théorie est difficile)
 
 ## Lecture
 
